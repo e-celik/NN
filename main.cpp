@@ -1,4 +1,4 @@
-#include "network.cpp"
+#include "network.h"
 #include "util.cpp"
 
 #include <stdio.h>
@@ -6,11 +6,15 @@
 using namespace std;
 
 int main() {
-    int layerSizes[] = {16, 8, 8, 2};
+    int layerSizes[] = {32, 16, 16, 16, 10};
 
-    Network* nn = new Network(4, layerSizes);
+    Network* nn = new Network(5, layerSizes);
 
+    nn->printNetworkActivations();
 
+    nn->feedForward();
+
+    nn->printNetworkActivations();
 
     return 0;
 }
