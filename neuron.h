@@ -17,7 +17,9 @@ public:
 
     ~Neuron();
 
-    void activateNeuron();
+    void activateNeuron(float*);
+
+    float* backPropogateNeuron(float, float*);
 
     float getA() { return a; }
     float* getW() { return w; }

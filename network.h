@@ -16,7 +16,14 @@ public:
 
     void feedForward();
 
+    void backPropogate(float*);
+
     void printNetworkActivations();
+
+    Layer* getInput() { return input; }
+    Layer* getoutput() { return output; }
+    int getNumLayers() { return numLayers; }
+
 };
 
 #endif // NETWORK_H

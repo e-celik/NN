@@ -1,5 +1,4 @@
 #include "network.h"
-#include "util.cpp"
 
 #include <stdio.h>
 
@@ -15,6 +14,16 @@ int main() {
     nn->feedForward();
 
     nn->printNetworkActivations();
+
+    float ys[] = {0.0, 0.5, 0.0, 0.5, 0.0, 0.5, 0.0, 0.5, 0.0, 0.5};
+
+    nn->backPropogate(ys);
+
+    nn->feedForward();
+
+    nn->printNetworkActivations();
+
+    delete nn;
 
     return 0;
 }

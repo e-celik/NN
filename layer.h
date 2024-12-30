@@ -5,17 +5,20 @@
 #include <iostream>
 #include <iomanip>
 
+class Network;
+
 class Layer {
 private:
     Neuron** neurons;
     int size;
+    Network* nn;
 
 public:
     Layer* next;
     Layer* prev;
 
-    Layer(int n);
-    Layer(int n, int _n);
+    Layer(Network*, int n);
+    Layer(Network*, int n, int _n);
 
     ~Layer();
 
@@ -24,6 +27,8 @@ public:
 
     float* getLayerActivations();
     void activateNeurons();
+
+    void backPropogateLayer(float*);
 
 
     void printLayerActivations();
