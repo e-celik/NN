@@ -5,26 +5,26 @@
 
 using namespace std;
 
-Layer::Layer(Network* nn, int n) {
+Layer::Layer(Network* nn, int n, Act func) {
     this->nn = nn;
     next = nullptr;
     prev = nullptr;
     size = n;
     neurons = new Neuron*[n];
     for (int i = 0; i < n; i++) {
-        Neuron* newNeuron = new Neuron(this);
+        Neuron* newNeuron = new Neuron(this, func);
         neurons[i] = newNeuron;   //consider statement aggregation
     }
 }
 
-Layer::Layer(Network* nn, int n, int _n) {
+Layer::Layer(Network* nn, int n, int _n, Act func) {
     this->nn = nn;
     next = nullptr;
     prev = nullptr;
     size = n;
     neurons = new Neuron*[n];
     for (int i = 0; i < n; i++) {
-        Neuron* newNeuron = new Neuron(this, _n);
+        Neuron* newNeuron = new Neuron(this, _n, func);
         neurons[i] = newNeuron;   //consider statement aggregation
     }
 }
@@ -34,6 +34,12 @@ Layer::~Layer() {
         delete neurons[i];
     }
     delete[] neurons;
+}
+
+void Layer::setActivations(float* input) {
+    for (int i = 0; i < size; i++) {
+        neurons[i]->setA(input[i]);
+    }
 }
 
 
@@ -76,8 +82,8 @@ void Layer::backPropogateLayer(float* y) {
 void Layer::printLayerActivations() {
     float* activations = this->getLayerActivations();
     for (int i = 0; i < size; i++) {
-        cout << fixed << setprecision(0) << setw(6) << activations[i]*100;
+        cout << fixed << setprecision(0) << setw(2) << "|" << activations[i]*100 << ", " << neurons[i]->getB() << ", " << neurons[i]->getW()[0] << "|";
     }
-    cout << endl;
+    cout << "       " << neurons[0]->getActivation() << endl;
     delete[] activations;
 }

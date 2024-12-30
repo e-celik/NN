@@ -7,15 +7,20 @@
 using namespace std;
 
 Network::Network(int l, int* ns) {
-    layers = new Layer(this, ns[0]);
+    layers = new Layer(this, ns[0], NoFunc);
     Layer* curLayer = layers;
     input = layers;
-    for (int i = 1; i < l; i++) {
-        Layer* newLayer = new Layer(this, ns[i], ns[i-1]);
+    for (int i = 1; i < l-1; i++) {
+        Layer* newLayer = new Layer(this, ns[i], ns[i-1], LReLU);
         curLayer->next = newLayer;
         newLayer->prev = curLayer;
         curLayer = newLayer;
     }
+
+    Layer* newLayer = new Layer(this, ns[l-1], ns[l-2], LReLU);
+    curLayer->next = newLayer;
+    newLayer->prev = curLayer;
+    curLayer = newLayer;
 
     output = curLayer;
 
@@ -32,6 +37,10 @@ Network::~Network() {
         delete curLayer;
         curLayer = temp;
     }
+}
+
+void Network::doInput(float* input) {
+    this->input->setActivations(input);
 }
 
 void Network::feedForward() {

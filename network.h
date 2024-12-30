@@ -14,6 +14,8 @@ public:
     Network(int l, int* ns);
     ~Network();
 
+    void doInput(float*);
+
     void feedForward();
 
     void backPropogate(float*);
